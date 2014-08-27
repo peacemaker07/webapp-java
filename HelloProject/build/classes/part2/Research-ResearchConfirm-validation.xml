@@ -1,0 +1,38 @@
+<!DOCTYPE validators PUBLIC
+    "-//OpenSymphony Group//XWork Validator 1.0.2//EN"
+    "http://struts.apache.org/dtds/xwork-validator-1.0.2.dtd">
+<validators>
+
+    <!-- 1. 名前フィールドの必須入力チェック -->
+    <field name="name">
+        <field-validator type="requiredstring">
+            <message key="errors.required.name"/>
+        </field-validator>
+    </field>
+
+    <!-- 2. メールアドレス入力の有効性判断 -->
+    <field name="email">
+        <field-validator type="email">
+            <message>有効なメールアドレスを入力してください</message>
+        </field-validator>
+    </field>
+
+    <!-- 3. 年齢の範囲チェック -->
+    <field name="age">
+        <field-validator type="int">
+            <param name="min">18</param>
+            <param name="max">99</param>
+            <message>
+      ${min}歳以上（${max}歳以下）の方が対象です。（入力値：${age}歳）
+            </message>
+        </field-validator>
+    </field>
+
+    <!-- 4. 選択肢の必須チェック -->
+    <field name="career">
+        <field-validator type="required">
+            <message>選択してください。</message>
+        </field-validator>
+    </field>
+
+</validators>

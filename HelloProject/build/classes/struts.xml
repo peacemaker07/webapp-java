@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+    <package name="HelloProject" extends="struts-default">
+		<interceptors>
+		
+		    <!-- interceptorの定義 -->
+		    <interceptor name="simple" class="part4.SimpleInterceptor"/>
+
+			<!-- interceptorの定義 -->
+    		<interceptor name="login" class="part4.LoginInterceptor" />
+
+    		<!-- interceptorをグルーピング -->
+		    <interceptor-stack name="myDefaultStack">
+		        <!-- 呼び出したい順にinterceptorを記述する -->
+		        <interceptor-ref name="simple" />
+		        <interceptor-ref name="login" />
+		        <interceptor-ref name="defaultStack" />
+		    </interceptor-stack>
+		
+		</interceptors>
+
+		<!-- デフォルトinterceptorを再定義 -->
+		<default-interceptor-ref name="myDefaultStack"/>
+
+		<global-results>
+		    <result name="login">/part4/login.jsp</result>
+		    <result name="login-success">/index.jsp</result>
+		</global-results>
+
+		<!-- part1 -->
+        <action name="Hello" class="part1.Hello">
+            <result name="success">/index.jsp</result>
+        </action>
+
+		<!-- part2 -->
+		<action name="Research" class="part2.Research">
+		    <result name="success">/part2/research.jsp</result>
+		</action>
+		
+		<action name="ResearchConfirm" method="confirm" class="part2.Research">
+		    <result name="success">/part2/confirm.jsp</result>
+		    <result name="input">/part2/research.jsp</result>
+		</action>
+		
+		<!-- part3 -->
+        <action name="ResearchPart3" class="part3.Research">
+            <result name="success">/part3/research.jsp</result>
+        </action>
+
+        <action name="ResearchConfirmPart3" method="confirm" class="part3.Research">
+            <result name="success" type="chain">ResearchWithValidation</result>
+        </action>
+
+        <action name="ResearchWithValidation" class="part3.ResearchWithValidation">
+            <result name="success">/part3/confirm.jsp</result>
+            <result name="input">/part3/research.jsp</result>
+        </action>
+
+		<!-- part4 -->		
+		<action name="Login" class="part4.Login">
+		    <result name="success">/index.jsp</result>
+		</action>
+
+		<!-- part5 -->
+		<action name="ViewSample" class="part5.ViewSample">
+		  <result name="success">/part5/viewsample.jsp</result>
+		</action>
+		
+		<action name="ViewSampleSubmit" method="submit" class="part5.ViewSample">
+		  <result name="success">/part5/viewsample.jsp</result>
+		</action>
+		
+		<action name="Download"  method="download" class="part5.ViewSample">
+		  <result name="success" type="stream">
+		    <param name="contentType">text/plain</param>
+		    <param name="contentDisposition">attachment; filename="sample.txt"</param>
+		  </result>
+		</action>
+
+    </package>
+</struts>
